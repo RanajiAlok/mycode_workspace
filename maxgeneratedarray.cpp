@@ -1,27 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution{
-    public:
-        int getmaximumGeneratedArray(int n){
-            int *nums=new int(n);
-            nums[0]=0;
-            nums[1]=1;
-            for(int i=0;i<=n;i++){
-                nums[2*i]=nums[i];
-                nums[2*i+1]=nums[i]+nums[i+1];
-            }
+class Solution {
+public:
+    int getMaximumGeneratedArray(int n) {
+        if(n==0||n==1)
+            return n;
+        
+        int nums[n+1];
+        nums[0]=0;
+        nums[1]=1;
+        int maxim=1;
+        for(int i=2;i<=n;i++){
+            if(i%2)
+                nums[i]=nums[i/2]+nums[i/2 +1];
+            else
+                nums[i]=nums[i/2];
             
-          /* for(int i=0;i<=n;i++){
-               cout<<nums[i]<<"  ";
-            }*/
-            int max=nums[n];
-            for(int i=n;i>0;i--){
-                if(max<nums[n-1])
-                max=nums[n-1];
-            }
-            
-            return max;
+            maxim=max(maxim,nums[i]);
+        }
+        return maxim;
     }
 };
 
@@ -31,6 +29,6 @@ int main(){
     cin>>n;
     Solution s1;
     
-    cout<<s1.getmaximumGeneratedArray(n)<<endl;
+    cout<<s1.getMaximumGeneratedArray(n)<<endl;
     return 0;
 }
