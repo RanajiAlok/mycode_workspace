@@ -24,3 +24,30 @@ public:
         return solution;
     }
 };
+
+//combinationsum- II leetcode(no duplicates)
+
+class Solution {
+public:
+    void resultcombination(int ind, int target,vector<int>& arr, vector<vector<int>>& sol, vector<int>& ds){
+        if(target==0){
+            sol.push_back(ds);
+            return;
+        }
+        for(int i=ind; i<arr.size();i++){
+            if(i>ind && arr[i]==arr[i-1])continue;
+            if(arr[i]>target) break;
+            ds.push_back(arr[i]);
+            resultcombination(i+1,target-arr[i],arr,sol,ds);
+            ds.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(),candidates.end());
+        vector<vector<int>> sol;
+        vector<int> ds;
+        resultcombination(0,target,candidates,sol,ds);
+        return sol;
+    }
+};
